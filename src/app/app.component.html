@@ -1,0 +1,60 @@
+<div class="container py-5">
+    <div class="rounded shadow p-5 d-flex">
+        <img src="/assets/img/undraw_people_re_8spw.svg" alt="" width="250">
+        <div>
+            <h3 class="text-primary"> Bienvenido a Usuarios</h3>
+            <h5 class="text-secondary"> Con esta aplicacion pordras consultar, crear, actualizar y eliminar a los usuarios de la aplicacion.
+            </h5>
+            <hr>
+            <p class="text-muted"> Esta aplicacion fue desarrollada con Spring Boot, Angular y MongoDB.
+            </p>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-6">
+            <h3>Lista de Usuarios</h3>
+            <div class="my-5"></div>
+            <div *ngFor="let usuario of usuarios" class="card mb-3">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="fw-bold">
+                            {{usuario.nombre}} {{usuario.apPaterno}} {{usuario.apMaterno}}
+                            <div>
+                                <small class="text-success" *ngIf="usuario.activo; else noCompletado">
+                                  <i class="fa fa-check-circle"></i> Activo
+                                </small>
+
+                                <ng-template #noCompletado>
+                                    <small class="text-muted">
+                                        <i class="fa fa-clock"></i> Inactivo
+                                    </small>
+                                </ng-template>
+
+                            </div>
+                        </div>
+                        <div class="text-muted">
+                            <i class="fa fa-edit cursor-pointer" title="Editar Usuario" (click)="edit(usuario)"></i>
+                            <i class="fa fa-trash cursor-pointer ms-2" title="Eliminar Usuario" (click)="deleteUser(usuario)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>{{usuario.userId ? 'Editar' : 'Nuevo'}} Usuario</h3>
+            <form class="mt-5" (ngSubmit)="saveUser()">
+                <div class="mb-3 form-floating">
+                    <input id="nombre" type="text" placeholder="Nombre" name="nombre" class="form-control" [(ngModel)]="usuario.nombre">
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="mb-3 form-check">
+                    <input id="completado" type="checkbox" class="form-check-input" name="completado" [(ngModel)]="usuario.activo">
+                    <label for="completado" class="form-check-label">Completado</label>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-primary btn-lg">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
